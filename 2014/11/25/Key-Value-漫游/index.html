@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Key &amp; Value 漫游 | David Loman</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="编程世界中，你往往会遇到很多名词，它们几乎都有一个特点就是让人不知所云。不过要是仔细仔细琢磨，其实也就很好理解了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Key & Value 漫游">
+<meta property="og:url" content="http://davidloman.net/2014/11/25/Key-Value-漫游/">
+<meta property="og:site_name" content="David Loman">
+<meta property="og:description" content="编程世界中，你往往会遇到很多名词，它们几乎都有一个特点就是让人不知所云。不过要是仔细仔细琢磨，其实也就很好理解了。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Key & Value 漫游">
+<meta name="twitter:description" content="编程世界中，你往往会遇到很多名词，它们几乎都有一个特点就是让人不知所云。不过要是仔细仔细琢磨，其实也就很好理解了。">
+
+  
+    <link rel="alternative" href="/atom.xml" title="David Loman" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+  
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fce7cd801f1e0b109bf86e2a11e97eb6a' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/">David Loman</a>
+    <div class="collapse navbar-collapse nav-menu">
+      <ul class="nav navbar-nav">
+      
+        <li>
+          <a href="/archives">
+            <i class="fa fa-archive"></i>
+            存档
+          </a>
+        </li>
+      
+        <li>
+          <a href="/categories">
+            <i class="fa fa-folder"></i>
+            分类
+          </a>
+        </li>
+      
+        <li>
+          <a href="/tags">
+            <i class="fa fa-tags"></i>
+            标签
+          </a>
+        </li>
+      
+        <li>
+          <a href="/about">
+            <i class="fa fa-user"></i>
+            关于我
+          </a>
+        </li>
+      
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	    <li> <ahref="/atom.xml"></a> </li>
+        
+          <li><a id="rss-link" href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="clearfix"></div>
+
+      <div id='content' class="container">
+
+        <div class="page-header-wrapper">
+          <!--[if lt IE 9]><div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>提示:</strong>您的浏览器版本太低了,建议升级到 <strong><a href="http://windows.microsoft.com/zh-cn/internet-explorer/download-ie" title="IE9">IE9</a></strong> 以上,本站使用<a href="https://www.google.com/intl/zh-CN/chrome/">Chrome浏览器</a>可以获得最好的显示效果.</div><![endif]-->
+          <div class="page-header">
+            <h1 class="title">
+          
+            Key & Value 漫游
+          
+            </h1>
+        </div>
+      </div>
+      
+      <section id="main"
+        
+      ><article id="post-wigrkmg14n2oqgzw" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <div id="toc"><span class="toc-header">Contents</span><ol class="article-toc"><li class="article-toc-item article-toc-level-2"><a class="article-toc-link" href="#概述"><span class="article-toc-text">概述</span></a></li><li class="article-toc-item article-toc-level-2"><a class="article-toc-link" href="#从简单的说起"><span class="article-toc-text">从简单的说起</span></a></li><li class="article-toc-item article-toc-level-2"><a class="article-toc-link" href="#多个相同类型的数据"><span class="article-toc-text">多个相同类型的数据</span></a></li><li class="article-toc-item article-toc-level-2"><a class="article-toc-link" href="#多个不同类型的数据"><span class="article-toc-text">多个不同类型的数据</span></a><ol class="article-toc-child"><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#c++的结构体"><span class="article-toc-text">C++的结构体</span></a></li><li class="article-toc-item article-toc-level-3"><a class="article-toc-link" href="#类"><span class="article-toc-text">类</span></a></li></ol></li><li class="article-toc-item article-toc-level-2"><a class="article-toc-link" href="#总结"><span class="article-toc-text">总结</span></a></li></ol></div><p>编程世界中，你往往会遇到很多名词，它们几乎都有一个特点就是让人不知所云。不过要是仔细仔细琢磨，其实也就很好理解了。
+<a id="more"></a></p>
+<h2 id="概述">概述</h2><p>在程序中，我们往往会存储一些数据。数据的存储是一个很有趣的过程，它有时体现了数据结构的有点，有时又像是脑洞大开的尝试。所有的数据存储不过就是一个Key对应一个Value的过程，不过在不同的语言中，或者是在不同的场景中，这种存储的形式会变得十分的不同。在程序里，我们会用变量，常量，类等方式来存储数据。而离开了程序我们可以使用文件，数据库等。在网络上，你可以通过HTML，XML，JSON等来存储数据。这些方法看似差异巨大，不过要是慢慢的去了解的话，你会发现其实一切都有着很多的相似之处。我将从变量开始，不断的分析，到最后了解网络中那些数据存储。这是一个有趣的过程，因为数据存储方式实在是太多，太让人惊奇了。本文将重点带你了解在编程语言中数据的存储。</p>
+<h2 id="从简单的说起">从简单的说起</h2><p>当你学习编程的时候，你一定对这样的语句有很亲切的感觉：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> a= <span class="number">0</span>;</div><div class="line">String s= <span class="string">"Hello world !"</span>;</div><div class="line"><span class="keyword">char</span> c=<span class="string">'a'</span>;</div></pre></td></tr></table></figure>
+
+<p>我的编程之路就是从这样的语句开始的，它们都被称之为赋值语句。就是将值（Value）赋予某个变量的过程。从以上的例子来说，字母‘a’ ，‘s’ ，‘c’ 所代表的就是Key，而‘=’后面的东西就是Value。我们在使用的时候只要通过这个Key就可以得到Value了。比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">System.out.println(s);</div></pre></td></tr></table></figure>
+
+<p>这样的话，我们就会得到“Hello world ！”了。我并不会告诉你它在内存中是如何实现的，如果这样的话，这篇文章将变成具有很浓烈的教科书气息的文章了。我所关心的只是这一种存储数据的形式，仅此而已。所以我们可以将这个Key与Value的关系结合起来。我们大胆的假设这个Key里面存储了这个Value（真实的情况往往不是如此），就比如我们把Key看成是一把钥匙，Value就是存储在这门后面的内容。这样你就会发现，变量其实就是通过变量名这把钥匙把值锁在了自己的房间里的一个过程。不过这个房间里的东西是可以变换的，比如当我的房间里存储的是整形数据时我可以把值变得更大或者变得更小。然而常量是不可变的，你可以使用它，但是你不能改变它。你要了解这个过程即：一个Key可以对应一个Value，我们通过这样的方式来存储数据。就比如上面的例子，我们用a存储了一个整形的0！接下来，我们要升级了。</p>
+<h2 id="多个相同类型的数据">多个相同类型的数据</h2><p>在你已经部分了解编程这件事情后，我们会遇到一个新的语法，这个语法是十分有用的。不过好像在Java中它并不常被使用。这便是数组。（我不会向你解释数组在程序中实际的物理存储方式，而仅仅是希望你能看清这一种存储的思路。）当具有更多的单一类型的数据时，我们都可以使用数组。其语法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//c++ style</span></div><div class="line"><span class="keyword">int</span> a [<span class="number">100</span>];</div><div class="line"><span class="comment">//java style</span></div><div class="line"><span class="keyword">int</span> a[] = <span class="keyword">new</span> <span class="keyword">int</span> [<span class="number">100</span>];</div></pre></td></tr></table></figure>
+
+<p>你会发现它有一定的长度，数据类型固定，它通过一个下标来作为区分。我们可以将不同的下标看成是不同的房间号，一个数组就相当与酒店的某一层，所有房间的房型是一样的。这个过程同样是一个Key&amp;Value的过程，不过它看起来复杂了点。首先，你要知道这是哪一层（你要调用哪一个数组），一个数组名其实就是一个Key，这个Key对应的Value就是这一层里所有的房间，而同时一个房间号又是一个Key，它对应的才是我们真正使用的数值。假如你开始糊涂了，就做一个简单的想象，你来到了某个酒店的11层，你就知道了该层里所有的房间号。而后，你要找1105的人，你就得到1105号门前去。就是这样一个过程。当你到11层时，11层就是一个Key，所有的房间号就是这个Key的Value，当你到了1105号门前时，1105号门就是一个Key，1105号门里的人就是Value。数组就是这样来存储数据。甚至是计算机在访问时也是遵循这一个过程的。希望你没有被绕晕，因为我们又将面临新的挑战。</p>
+<h2 id="多个不同类型的数据">多个不同类型的数据</h2><p>当我们需要存储数据时，情况往往是十分不同的。比如，我要存下一个同学的信息，那么这就会有年龄，学号，姓名，手机等信息。你当然可以将它们都赋值为字符，因为这会使你在处理时更加方便。但是你也会发现这些数据好像不该用数组来存储，毕竟它们代表的是不同的属性。所以我们会发现一些新的数据处理方式。</p>
+<h3 id="c++的结构体">C++的结构体</h3><p>在C++中，有一种与数组完全不一样的数据存储方式，这便是结构体。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> person</div><div class="line">{</div><div class="line">     <span class="keyword">int</span> age;</div><div class="line">     <span class="keyword">char</span> name[<span class="number">20</span>];</div><div class="line">     <span class="keyword">char</span> phoneNumber[<span class="number">15</span>];</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>结构体大大丰富了我们存储与使用数据的方式，不过它也带给大家一些痛苦。其实你只要把它当成与数组一样的存储方式就可以了。不过你得换个角度思考，因为它存储的数据类型，就是数据类型。这就像是一幅地图，你不能在地图上确实到达一个真实世界的地方，不过你可以根据地图来找到那个地方。如上面的例子显示的一样，我们可以把person看成是一个Key，然后这个Key对应的是三个变量即：age，name，phoneNumber。只不过name与phoneNumber比较复杂，又恰好是个数组，于是name，phoneNumber又可以成为Key去存储相关的Value。但是所有的过程还是离不开Key与Value。在C++中，我们之所以要引入这样的数据结构是因为，我们发现有些变量是有联系的，它们可以被存储在一起。而面向对象编程把这种特性发扬光大了。</p>
+<h3 id="类">类</h3><p>在面向对象编程中，类是一个很重要的概念。所有的程序都是基于类来构建的，类中的许多特性都体现了面向对象编程本身的特点。类的形式通常如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class Person {</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> age;</div><div class="line">    String name;</div><div class="line">    String phoneNumber;</div><div class="line">    </div><div class="line">    Person(){};</div><div class="line">    </div><div class="line">    String getPhoneNumber (){</div><div class="line">        <span class="keyword">return</span> phoneNumber;</div><div class="line">    }</div><div class="line"></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>你会看到在类里一样的有变量，不过除了变量这里面还有方法。其实思路还是一样的，我们一样将类看成是一座酒店的话。你步入酒店中，你就能到达很多很多的地方，这些地方有的可能是厨房，有的可能是客房，有的可能是会议室。它们就是变量与方法，只不过，变量对应的数值，而方法对应的是某种操作。所以其实类也一样的是一种存储数据的方式，它也一样遵守着<strong>Key&amp;Value</strong>的法则。所以不要被它的名堂吓怕了。</p>
+<h2 id="总结">总结</h2><p>如果你接触过编程你一定对这么一句话很熟悉，人们总是不厌其烦的告诉你：<strong>程序就是数据结构与算法</strong>。对于你来说这二者都是抽象的。不仅是数据结构是抽象的，相对的算法也是抽象的。你从那些冷冰冰的文字中根本就感觉不出来数据结构是个什么东西，算法又是什么东西。但是其实，如果你能够理解本文的话，你会发现数据结构就是这么一个东西，它就是<strong>Key&amp;Value</strong>这一法则的完美应用。你所学习到的链表是这样的，树是这样的，图是这样的。因为说到底它们都是一种存储数据的方式。但是，如果你仅仅是看它们的表象，你一定会被它们的纷繁复杂所迷惑。在未来，我将向你介绍其它的存储方式，看上去很不可思议，但是却又遵循着这样的思想。希望你能够有所收获。</p>
+
+      
+    </div>
+  </div>
+</article>
+
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-Key-Value-漫游" data-title="Key &amp; Value 漫游" data-url="http://davidloman.net/2014/11/25/Key-Value-漫游/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+ <script type="text/javascript">
+ var duoshuoQuery = {short_name:"david-loman"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  
+
+  <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_t163" data-cmd="t163" title="分享到网易微博"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+</section>
+        
+          
+<aside id="sidebar">
+  
+    
+      
+<div class="widget-wrap center">
+  <ul class="pagination">
+    <li>
+      
+        <a href="/2014/12/08/我的Ubuntu之旅/" class="nav-prev">Prev</a>
+      
+    </li>
+    <li>
+      <a data-url="http://davidloman.net/2014/11/25/Key-Value-漫游/" data-id="wigrkmg14n2oqgzw" data_title="Key & Value 漫游"
+        data_summary="编程世界中，你往往会遇到很多名词，它们几乎都有一个特点就是让人不知所云。不过要是仔细仔细琢磨，其实也就很好理解了。
+
+概述在程序中，我们往往会存储一些数据。数据的..." class="article-share-link">Share</a>
+    </li>
+    <li>
+      
+        <a href="/2014/11/25/搭建Ubuntu下的开发环境/" class="nav-next">Next</a>
+      
+    </li>
+  </ul>
+</div>
+
+
+    
+      <div class="widget-wrap">
+  <div class="post-widget">
+    <i class="fa fa-clock-o"></i>
+    <time datetime="2014-11-25T11:57:23.000Z" itemprop="datePublished">11月 25 2014</time>
+  </div>
+</div>
+
+    
+      
+  <div class="widget-wrap">
+    <div class="post-widget">
+      <i class="fa fa-folder"></i>
+      <a class="category-link" href="/categories/编程经验/">编程经验<span class="category-count">2</span></a>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="post-widget">
+      <i class="fa fa-tags"></i>
+      <a class="tag-link" href="/tags/学习/">学习<span class="tag-count">1</span></a><a class="tag-link" href="/tags/结构体/">结构体<span class="tag-count">1</span></a><a class="tag-link" href="/tags/编程/">编程<span class="tag-count">2</span></a><a class="tag-link" href="/tags/面向对象/">面向对象<span class="tag-count">1</span></a>
+    </div>
+  </div>
+
+
+    
+  
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer container">
+    <div id="footer-info" class="inner">
+      <a href="/">David Loman</a> &copy; 2015 Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and Theme by <a href="https://github.com/seff/nut" target="_blank">Nut</a>
+    </div>
+  </div>
+</footer>
+<a id="gotop" href="#">
+  <i class="fa fa-chevron-up"></i>
+</a>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="[object Object]" class="mobile-nav-link">0</a>
+  
+    <a href="[object Object]" class="mobile-nav-link">1</a>
+  
+    <a href="[object Object]" class="mobile-nav-link">2</a>
+  
+    <a href="[object Object]" class="mobile-nav-link">3</a>
+  
+</nav>
+
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+<script src="/js/jquery.fitvids.js" type="text/javascript"></script>
+
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+
+  </div>
+</body>
+</html>
